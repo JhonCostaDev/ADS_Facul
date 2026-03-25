@@ -1,0 +1,47 @@
+# --- Executables and Binaries ---
+*.out
+*.exe
+*.app
+*.bin
+# If you name your output 'main', uncomment the next line
+# main
+
+# --- Objects and Libraries ---
+*.o
+*.obj
+*.a
+*.la
+*.lo
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# --- Build Directories ---
+[Bb]uild/
+[Dd]ist/
+bin/
+obj/
+
+# --- Dependency management ---
+.deps/
+.libs/
+
+# --- Debug files ---
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# --- IDEs and Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# --- Unit Testing / Coverage ---
+*.gcno
+*.gcda
+*.gcov
