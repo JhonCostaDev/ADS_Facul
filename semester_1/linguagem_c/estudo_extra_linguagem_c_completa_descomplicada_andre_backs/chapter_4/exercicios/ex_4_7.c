@@ -9,40 +9,45 @@ Imposto|  7%  |  12% |  15%  |   8%  |
 =====================================================  */
 int main(void) {
     int state;
+    float value, finalPrice;
     
     printf("===== Cálculo valor com Imposto =====\n");
     printf("Para qual estado vai o produto?\n");
 
     while (1) {
-        printf("Digite:\n(1) -> MG\n(2) -> SP\n(3) -> RJ\n(4) -> MS\n(0) -> Sair\n");
-        scanf("%d", &state);
-
-        if (state == 0) break;
-        
+        printf("Digite:\n(1) -> MG\n(2) -> SP\n(3) -> RJ\n(4) -> MS\n(5) -> Sair\n");
+        if(scanf("%d", &state) == 1 && (state > 0 && state < 6)) {
+            
+            printf("Digite o valor do produto:\n");
+            scanf("%f", &value);
+            break;
+        } else {
+            printf("Erro! Opção inválida. Tente Novamente!\n");
+            break;
+        }
+        printf("Aqui");
+        //if(scanf)
     }
-    
-        
-    
-    
-    
     
     switch (state)
     {
     case 1:
-        /* code */
+        finalPrice = value * 1.07;
         break;
     case 2:
-        /* code */
+        finalPrice = value * 1.12;
         break;
     case 3:
-        /* code */
+        finalPrice = value * 1.15;
         break;
     case 4:
-        /* code */
+        finalPrice = value * 1.08;
         break;
     
     default:
         break;
     }
+
+    printf("Produto mais imposto: R$ %.2f", finalPrice);
     return 0;
 }
