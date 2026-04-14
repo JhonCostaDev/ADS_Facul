@@ -7,6 +7,8 @@ Estado |  MG  |  SP  |   RJ  |   MS  |
 Imposto|  7%  |  12% |  15%  |   8%  |
 
 =====================================================  */
+int menu();
+float getValue();
 int main(void) {
     int state;
     float value, finalPrice;
@@ -14,22 +16,12 @@ int main(void) {
     printf("===== Cálculo valor com Imposto =====\n");
     printf("Para qual estado vai o produto?\n");
 
-    while (1) {
-        printf("Digite:\n(1) -> MG\n(2) -> SP\n(3) -> RJ\n(4) -> MS\n(5) -> Sair\n");
-        if(scanf("%d", &state) == 1 && (state > 0 && state < 6)) {
-            
-            printf("Digite o valor do produto:\n");
-            scanf("%f", &value);
-            break;
-        } else {
-            printf("Erro! Opção inválida. Tente Novamente!\n");
-            break;
-        }
-        printf("Aqui");
-        //if(scanf)
-    }
-    
-    switch (state)
+    state = menu();
+
+    if(state) {
+        value = getValue();
+        if (value) {
+            switch (state)
     {
     case 1:
         finalPrice = value * 1.07;
@@ -47,7 +39,37 @@ int main(void) {
     default:
         break;
     }
+        }
+       printf("Produto mais imposto: R$ %.2f\n", finalPrice); 
+    } else {
+        printf("Entrada inválida, tente novamente!\n");
+    }
+    
 
-    printf("Produto mais imposto: R$ %.2f", finalPrice);
+    
+    
+    return 0;
+}
+
+int menu() {
+    int option;
+    printf("Digite:\n(1) -> MG\n(2) -> SP\n(3) -> RJ\n(4) -> MS\n(0) -> Sair\n");
+    scanf("%d", &option);
+
+    if(option > 0 && option < 5) {
+        return option;
+    }
+
+    return 0;
+}
+
+float getValue() {
+    float value;
+    printf("Digite o valor do produto: \n");
+    scanf("%f", &value);
+
+    if(value >= 0) {
+        return value;
+    }
     return 0;
 }
