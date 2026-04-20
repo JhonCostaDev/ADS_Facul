@@ -18,6 +18,7 @@ struct cityCard {
 //prototypes
 int mainMenu();
 int getUserInput(char msg[], int min, int max);
+void cleanScreen();
 
 //main
 int main(int argc, char const *argv[])
@@ -41,6 +42,7 @@ int main(int argc, char const *argv[])
     - Sair do programa
 */
 int mainMenu() {
+    cleanScreen();
     printf("\t===== Super Trunfo Cidades =====\n");
     printf("\t\t1 - Novo Jogo\n\t\t2 - Ver regras do Jogo\n\t\t3 - Cadastrar Nova Carta\n\t\t4 - Ver Cartas Cadastradas\n\t\t0 - Sair do Game\n");
     int option = getUserInput("Digite uma das opções acima: \n", 0, 4);
@@ -64,4 +66,9 @@ int getUserInput(char msg[], int min, int max) {
         while (getchar() != '\n');
     }
     
+}
+
+void cleanScreen() {
+    printf("\033[H\033[J");
+    fflush(stdout); // Flush the output buffer to ensure the screen is cleared immediately
 }
