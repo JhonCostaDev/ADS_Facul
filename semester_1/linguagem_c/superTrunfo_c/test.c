@@ -17,7 +17,7 @@ struct cityCard {
 
 //prototypes
 int mainMenu();
-int getUserInput();
+int getUserInput(char msg[], int min, int max);
 
 //main
 int main(int argc, char const *argv[])
@@ -43,21 +43,25 @@ int main(int argc, char const *argv[])
 int mainMenu() {
     printf("\t===== Super Trunfo Cidades =====\n");
     printf("\t\t1 - Novo Jogo\n\t\t2 - Ver regras do Jogo\n\t\t3 - Cadastrar Nova Carta\n\t\t4 - Ver Cartas Cadastradas\n\t\t0 - Sair do Game\n");
-    int option = getUserInput();
+    int option = getUserInput("Digite uma das opções acima: \n", 0, 4);
     return option;
 }
 
-int getUserInput() {
+//
+int getUserInput(char msg[], int min, int max) {
     int value;
-    printf("Escolha uma das opções acima:\n");
 
-    //loop
-    while (scanf("%d", &value) != 1 || value < 0 || value > 4) {
-        printf("Error: Digite apenas números entre 0 e 4 (inclusos): \n");
+    while(1) {
+        printf("%s", msg);
 
+        if (scanf("%d", &value) == 1 && value >= min && value <= max) {
+            while (getchar() != '\n');
+            return value;
+        }
+        printf("Error: Digite apenas números entre %d e %d (inclusos): \n", min, max);
+    
         //clean buffer
         while (getchar() != '\n');
     }
-
-    return value;
+    
 }
