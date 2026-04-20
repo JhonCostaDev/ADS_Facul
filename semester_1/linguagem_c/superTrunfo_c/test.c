@@ -1,5 +1,5 @@
 #include <stdio.h>
-//TODO: implement clean screen function
+//TODO: implement option 2 register new cards
 //molde das cartas
 struct cityCard {
     int carNumber;
@@ -21,10 +21,29 @@ int getUserInput(char msg[], int min, int max);
 void cleanScreen();
 
 //main
-int main(int argc, char const *argv[])
-{
-    int test = mainMenu();
-    printf("%d\n", test);
+int main(int argc, char const *argv[]) {
+    int option = mainMenu();
+
+    switch (option) {
+    case 1:
+        printf("New Game%d\n", option);
+        break;
+    case 2:
+        printf("Rules%d\n", option);
+        break;
+    case 3:
+        printf("New card%d\n", option);
+        break;
+    case 4:
+        printf("list cards%d\n", option);
+        break;
+    case 0:
+        printf("exit%d\n", option);
+        break;
+    default:
+        break;
+    }
+   
     return 0;
 }
 
