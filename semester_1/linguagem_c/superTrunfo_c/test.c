@@ -1,49 +1,63 @@
 #include <stdio.h>
 //TODO: implement option 2 register new cards
+
+//Consts
+#define MAX_CARDS 100
 //molde das cartas
 struct cityCard {
-    int carNumber;
-    char state;
+    int cardNumber;
+    char state[3];
     char cityName[20];
-    char cardCod[3];
+    char cardCod[10];
     //attributes
     int touristAttractions;
-    unsigned int long population;
+    unsigned long int population;
     float area;
     float pib;
     float pibPerCapita;
     float populationDensity;
+    //superPower
+    long double superPower;
+
 };
 
 //prototypes
 int mainMenu();
 int getUserInput(char msg[], int min, int max);
 void cleanScreen();
+void createNewCard(struct cityCard card[], int *numberOfCards);
 
 //main
 int main(int argc, char const *argv[]) {
-    int option = mainMenu();
-
-    switch (option) {
-    case 1:
-        printf("New Game%d\n", option);
-        break;
-    case 2:
-        printf("Rules%d\n", option);
-        break;
-    case 3:
-        printf("New card%d\n", option);
-        break;
-    case 4:
-        printf("list cards%d\n", option);
-        break;
-    case 0:
-        printf("exit%d\n", option);
-        break;
-    default:
-        break;
-    }
-   
+    struct cityCard cityCards[MAX_CARDS]; // Array de cartas
+    int numberOfCards = 0;
+    int option = 0;
+    do
+    {
+        
+        option = mainMenu();
+    
+        switch (option) {
+        case 1:
+            printf("New Game%d\n", option);
+            break;
+        case 2:
+            printf("Rules%d\n", option);
+            break;
+        case 3:
+            printf("New card%d\n", option);
+            createNewCard(cityCards, &numberOfCards);
+            break;
+        
+        case 0:
+            printf("exit%d\n", option);
+            break;
+        default:
+            break;
+        }
+    } while (option != 0);
+    
+    
     return 0;
 }
 
@@ -90,4 +104,43 @@ int getUserInput(char msg[], int min, int max) {
 void cleanScreen() {
     printf("\033[H\033[J");
     fflush(stdout); // Flush the output buffer to ensure the screen is cleared immediately
+}
+
+//This function create a new card
+void createNewCard(struct cityCard card[], int *numberOfCards){
+    //int cardNumber = numberOfCards;
+    if(*numberOfCards < MAX_CARDS) {
+        card[*numberOfCards].cardNumber = (*numberOfCards) + 1;
+        printf("Digite o Estado da federação da carta: (EX: São Paulo = sp):\n");
+        scanf("%s", card[*numberOfCards].state);
+        //sprintf = generate cardCod
+        sprintf(card[*numberOfCards].cardCod, "%s%d", card[*numberOfCards].state, card[*numberOfCards].cardNumber);
+
+        printf("Digite o Nome da cidade: (EX: São Paulo):\n");  //TODO: Resolver nome /espaço, subistituir fgets().
+        scanf("%s", card[*numberOfCards].cityName);
+
+        //get population
+        printf("Digite quantas pessoas vivem em %s: \n", card[*numberOfCards].cityName);
+        scanf("%lu", &card[*numberOfCards].population);
+
+        //get area
+        printf("Digite à área de %s: ", card[*numberOfCards].cityName);
+        scanf("%f", &card[*numberOfCards].area);
+
+        //get pib
+        printf("Digite o PIB de %s: ", card[*numberOfCards].cityName);
+        scanf("%f", &card[*numberOfCards].pib);
+
+        //get touristAttractions
+        printf("Digite a quantidade de atrações turísticas de %s: ", card[*numberOfCards].cityName);
+        scanf("%d", &card[*numberOfCards].touristAttractions);
+        
+        // Generate pibPerCapita
+        card[*numberOfCards].pibPerCapita = card[*numberOfCards].pib / card[*numberOfCards].population;
+        // Generate population density 
+        card[*numberOfCards].populationDensity = card[*numberOfCards].population / card[*numberOfCards].area;
+        //Generate superPower 
+        card[*numberOfCards].superPower = (long double) card[*numberOfCards].population + card[*numberOfCards].area + card[*numberOfCards].pib + card[*numberOfCards].touristAttractions + card[*numberOfCards].pibPerCapita + (1/card[*numberOfCards].populationDensity);
+        (*numberOfCards)++;
+    }
 }
