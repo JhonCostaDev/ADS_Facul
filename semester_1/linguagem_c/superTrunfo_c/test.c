@@ -1,6 +1,8 @@
 #include <stdio.h>
 //TODO: corrigir erros nas funções cadastrar nova carta e exibir cartas
 // TODO: Modularização
+
+//TODO: Load data n'ao esta atualizando o numero de cartas ja cadastradas
 //Salvar cartas cadastradas em arquivo
 
 //Consts
@@ -30,12 +32,16 @@ void cleanScreen();
 void createNewCard(struct cityCard card[], int *numberOfCards);
 void listCards(struct cityCard card[], int arraysize);
 void pauseEnter();
+void loadData(struct cityCard cityCards[], int *numberOfCards);
 
 //main
 int main(int argc, char const *argv[]) {
     struct cityCard cityCards[MAX_CARDS]; // Array de cartas
     int numberOfCards = 0;
     int option = 0;
+
+    loadData(cityCards, &numberOfCards); //Load cards from a file
+
     do
     {
         
@@ -171,4 +177,34 @@ void pauseEnter() {
     while((c = getchar()) != '\n' && c != EOF); //  Wait for the user to press Enter (newline character) and ignore any other input until Enter is pressed
 
     getchar(); // Consume the newline character left in the input buffer after pressing Enter to prevent it from affecting subsequent input operations
+}
+
+
+//Load cards from a file...
+void loadData(struct cityCard cityCards[], int *numberOfCards){
+    FILE *database = fopen("data.bin", "rb");
+
+    if (database == NULL) {
+        *numberOfCards = 0;
+        printf("The database is empty.\nStarting empty\n");
+    }
+
+    //=====
+    fseek(database, 0, SEEK_END);
+    long totalBytes = ftell(database);
+
+    int registersOnFile = totalBytes / sizeof(struct cityCard);
+    
+    if(registersOnFile > MAX_CARDS) {
+        *numberOfCards = MAX_CARDS;
+        printf("Warning: The file has more registers than the limit.\nLoading just %d registers\n", MAX_CARDS);
+    } else {
+        *numberOfCards = registersOnFile;
+    }
+
+    rewind(database);
+    fread(cityCards, sizeof(struct cityCard), *numberOfCards, database);
+
+    fclose(database);
+    printf("System ready!\nThere are %d registers on database\n", *numberOfCards);
 }
