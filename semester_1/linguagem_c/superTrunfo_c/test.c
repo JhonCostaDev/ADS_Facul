@@ -1,9 +1,10 @@
 #include <stdio.h>
 //TODO: corrigir erros nas funções cadastrar nova carta e exibir cartas
+// TODO: Modularização
 //Salvar cartas cadastradas em arquivo
 
 //Consts
-#define MAX_CARDS 100
+#define MAX_CARDS 100 //Const tamanho maximo do array de cartas
 //molde das cartas
 struct cityCard {
     int cardNumber;
@@ -50,6 +51,7 @@ int main(int argc, char const *argv[]) {
         case 3:
             printf("New card%d\n", option);
             createNewCard(cityCards, &numberOfCards);
+            pauseEnter();
             break;
         
         case 4:
@@ -66,19 +68,6 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 
-//criar menu
-/*
-1 - novo jogo
-    - Inicia um novo jogo contra a maquina
-2 - ver regras do jogo
-    - Exibir as regras do jogo
-3 - cadastrar cartas
-    - Inserir novas castas no baralho
-4 - ver cartas cadastradas
-- Exibir a quantidades de cartas        cadastradas e poder ver carta a carta
-0 - sair
-    - Sair do programa
-*/
 int mainMenu() {
     cleanScreen();
     printf("\t===== Super Trunfo Cidades =====\n");
@@ -148,14 +137,27 @@ void createNewCard(struct cityCard card[], int *numberOfCards){
         card[*numberOfCards].populationDensity = card[*numberOfCards].population / card[*numberOfCards].area;
         //Generate superPower 
         card[*numberOfCards].superPower = (long double) card[*numberOfCards].population + card[*numberOfCards].area + card[*numberOfCards].pib + card[*numberOfCards].touristAttractions + card[*numberOfCards].pibPerCapita + (1/card[*numberOfCards].populationDensity);
-        (*numberOfCards)++;
+        (*numberOfCards)++; // <= Increment
+        
+        //Save card on file
+        FILE *database;
+        database = fopen("data.bin", "ab");
+        fwrite(&card[*numberOfCards - 1], sizeof(struct cityCard), 1, database);
+        fclose(database);
+        
+        printf("Carta nº %d cadastrada com sucesso!\n ", *numberOfCards);
+        
+
+    } else {
+        printf("O número máximo de cartas já foi cadastrado!\nCapacidade: %d.\n", MAX_CARDS);
     }
 }
 
 void listCards(struct cityCard card[], int arraysize) {//TODO: Verificar especificadores corretos Unsigend long
-    printf("===== Cartas cadastradas: %d =================\n", arraysize);
+    printf("===== Cartas cadastradas: %d =============\n", arraysize);
     
     for(int i = 0; i < arraysize; i++) {
+        printf("========= Carta Nº %d =========\n",card[i].cardNumber);
         printf("Número da carta: %d\nEstado(UF):%s\nCidade: %s\nCódigo da Carta: %s\nPopulação: %ld\nÁrea: %.2f\nPIB: %.2f\nPIB per Capta: %.2f\nDensidade Populacional: %.2f\nNúmero de Pontos Turísticos: %d\nSuper Poder: %.2f\n",card[i].cardNumber,card[i].state, card[i].cityName, card[i].cardCod, card[i].population, card[i].area, card[i].pib, card[i].pibPerCapita, card[i].populationDensity, card[i].touristAttractions, card[i].superPower);
     }
     printf("======================\n");
