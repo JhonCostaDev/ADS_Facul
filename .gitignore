@@ -45,3 +45,6 @@ obj/
 *.gcno
 *.gcda
 *.gcov
+
+#ebooks
+.epub
