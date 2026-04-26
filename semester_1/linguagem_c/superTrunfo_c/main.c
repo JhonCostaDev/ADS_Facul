@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "managerCards.h"
-//TODO: corrigir erros nas funções cadastrar nova carta e exibir cartas
-// TODO: Modularização
+//TODO: create a function to save a new card out of createNewCard()
+//TODO: Crete the logic of the game
+//TODO: using ENUM to make mainMenu() more redable.
 
-//TODO: Load data n'ao esta atualizando o numero de cartas ja cadastradas
-//Salvar cartas cadastradas em arquivo
+
 
 
 
@@ -48,8 +48,3 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 
-
-
-//This function create a new card
-//TODO: exibir mensagem de inserção success
-//TODO: super power está exibindo os valores de área

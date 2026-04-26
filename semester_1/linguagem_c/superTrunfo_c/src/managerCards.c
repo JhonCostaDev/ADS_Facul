@@ -67,6 +67,7 @@ void createNewCard(struct cityCard card[], int *numberOfCards){
         card[*numberOfCards].populationDensity = card[*numberOfCards].population / card[*numberOfCards].area;
         //Generate superPower 
         card[*numberOfCards].superPower = (long double) card[*numberOfCards].population + card[*numberOfCards].area + card[*numberOfCards].pib + card[*numberOfCards].touristAttractions + card[*numberOfCards].pibPerCapita + (1/card[*numberOfCards].populationDensity);
+        
         (*numberOfCards)++; // <= Increment
         
         //Save card on file
@@ -89,7 +90,7 @@ void listCards(struct cityCard card[], int arraysize) {//TODO: Verificar especif
     
     for(int i = 0; i < arraysize; i++) {
         printf("========= Carta Nº %d =========\n",card[i].cardNumber);
-        printf("Número da carta: %d\nEstado(UF):%s\nCidade: %s\nCódigo da Carta: %s\nPopulação: %ld\nÁrea: %.2f\nPIB: %.2f\nPIB per Capta: %.2f\nDensidade Populacional: %.2f\nNúmero de Pontos Turísticos: %d\nSuper Poder: %.2f\n",card[i].cardNumber,card[i].state, card[i].cityName, card[i].cardCod, card[i].population, card[i].area, card[i].pib, card[i].pibPerCapita, card[i].populationDensity, card[i].touristAttractions, card[i].superPower);
+        printf("Número da carta: %d\nEstado(UF):%s\nCidade: %s\nCódigo da Carta: %s\nPopulação: %lu\nÁrea: %.2f\nPIB: %.2f\nPIB per Capta: %.2f\nDensidade Populacional: %.2f\nNúmero de Pontos Turísticos: %d\nSuper Poder: %.2Lf\n",card[i].cardNumber,card[i].state, card[i].cityName, card[i].cardCod, card[i].population, card[i].area, card[i].pib, card[i].pibPerCapita, card[i].populationDensity, card[i].touristAttractions, card[i].superPower);
     }
     printf("======================\n");
 }
@@ -112,6 +113,7 @@ void loadData(struct cityCard cityCards[], int *numberOfCards){
     if (database == NULL) {
         *numberOfCards = 0;
         printf("The database is empty.\nStarting empty\n");
+        return;
     }
 
     //=====
