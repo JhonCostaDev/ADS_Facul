@@ -1,78 +1,5 @@
 #include <stdio.h>
-//TODO: corrigir erros nas funções cadastrar nova carta e exibir cartas
-// TODO: Modularização
-
-//TODO: Load data n'ao esta atualizando o numero de cartas ja cadastradas
-//Salvar cartas cadastradas em arquivo
-
-//Consts
-#define MAX_CARDS 100 //Const tamanho maximo do array de cartas
-//molde das cartas
-struct cityCard {
-    int cardNumber;
-    char state[3];
-    char cityName[20];
-    char cardCod[10];
-    //attributes
-    int touristAttractions;
-    unsigned long int population;
-    float area;
-    float pib;
-    float pibPerCapita;
-    float populationDensity;
-    //superPower
-    long double superPower;
-
-};
-
-//prototypes
-int mainMenu();
-int getUserInput(char msg[], int min, int max);
-void cleanScreen();
-void createNewCard(struct cityCard card[], int *numberOfCards);
-void listCards(struct cityCard card[], int arraysize);
-void pauseEnter();
-void loadData(struct cityCard cityCards[], int *numberOfCards);
-
-//main
-int main(int argc, char const *argv[]) {
-    struct cityCard cityCards[MAX_CARDS]; // Array de cartas
-    int numberOfCards = 0;
-    int option = 0;
-
-    loadData(cityCards, &numberOfCards); //Load cards from a file
-
-    do
-    {
-        
-        option = mainMenu();
-    
-        switch (option) {
-        case 1:
-            printf("New Game%d\n", option);
-            break;
-        case 2:
-            printf("Rules%d\n", option);
-            break;
-        case 3:
-            printf("New card%d\n", option);
-            createNewCard(cityCards, &numberOfCards);
-            pauseEnter();
-            break;
-        
-        case 4:
-            printf("Listar cartas%d\n", option);
-            listCards(cityCards, numberOfCards);
-            pauseEnter();
-            break;
-        default:
-            break;
-        }
-    } while (option != 0);
-    
-    
-    return 0;
-}
+#include "managerCards.h"
 
 int mainMenu() {
     cleanScreen();
@@ -106,9 +33,6 @@ void cleanScreen() {
     fflush(stdout); // Flush the output buffer to ensure the screen is cleared immediately
 }
 
-//This function create a new card
-//TODO: exibir mensagem de inserção success
-//TODO: super power está exibindo os valores de área
 void createNewCard(struct cityCard card[], int *numberOfCards){
     //int cardNumber = numberOfCards;
     if(*numberOfCards < MAX_CARDS) {
@@ -146,8 +70,9 @@ void createNewCard(struct cityCard card[], int *numberOfCards){
         (*numberOfCards)++; // <= Increment
         
         //Save card on file
+        // TODO: CRIAR UMA FUN;CAO SEPARADA SO PARA ESCREVER NO ARQUIVO
         FILE *database;
-        database = fopen("data.bin", "ab");
+        database = fopen("data/data.bin", "ab");
         fwrite(&card[*numberOfCards - 1], sizeof(struct cityCard), 1, database);
         fclose(database);
         
@@ -182,7 +107,7 @@ void pauseEnter() {
 
 //Load cards from a file...
 void loadData(struct cityCard cityCards[], int *numberOfCards){
-    FILE *database = fopen("data.bin", "rb");
+    FILE *database = fopen("data/data.bin", "rb");
 
     if (database == NULL) {
         *numberOfCards = 0;
