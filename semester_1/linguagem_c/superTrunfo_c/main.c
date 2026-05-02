@@ -10,7 +10,7 @@
 //TODO: Write the game rules
 
 
-
+void newGame(struct cityCard card[], int numberOfCards);
 
 
 //main
@@ -29,6 +29,8 @@ int main(int argc, char const *argv[]) {
         switch (option) {
         case 1:
             printf("New Game%d\n", option);
+            newGame(cityCards, numberOfCards);
+            pauseEnter();
             break;
         case 2:
             printf("Rules%d\n", option);
@@ -51,5 +53,15 @@ int main(int argc, char const *argv[]) {
     
     
     return 0;
+}
+// NEW GAME
+//TODO: move this functions to the proper file
+void newGame(struct cityCard card[], int numberOfCards) {
+    int startLenght = numberOfCards / 2;
+    printf("%d", startLenght);
+
+    int playerCards[MAX_CARDS];
+    int computerCards[MAX_CARDS];
+    // how split the cards inside each array, how to sort it?
 }
 
