@@ -3,6 +3,11 @@
 //TODO: create a function to save a new card out of createNewCard()
 //TODO: Crete the logic of the game
 //TODO: using ENUM to make mainMenu() more redable.
+//TODO: change the codCard logic (a1, a2, a3, a4)
+//TODO: change scale of PIB values
+//TODO: ask to registre a new card again
+//TODO: check PIB per capta value, the values is 0.0 in all cards, check scale
+//TODO: Write the game rules
 
 
 
