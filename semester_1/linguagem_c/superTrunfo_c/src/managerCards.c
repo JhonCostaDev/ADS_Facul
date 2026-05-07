@@ -1,78 +1,5 @@
 #include <stdio.h>
-//TODO: corrigir erros nas funções cadastrar nova carta e exibir cartas
-// TODO: Modularização
-
-//TODO: Load data n'ao esta atualizando o numero de cartas ja cadastradas
-//Salvar cartas cadastradas em arquivo
-
-//Consts
-#define MAX_CARDS 100 //Const tamanho maximo do array de cartas
-//molde das cartas
-struct cityCard {
-    int cardNumber;
-    char state[3];
-    char cityName[20];
-    char cardCod[10];
-    //attributes
-    int touristAttractions;
-    unsigned long int population;
-    float area;
-    float pib;
-    float pibPerCapita;
-    float populationDensity;
-    //superPower
-    long double superPower;
-
-};
-
-//prototypes
-int mainMenu();
-int getUserInput(char msg[], int min, int max);
-void cleanScreen();
-void createNewCard(struct cityCard card[], int *numberOfCards);
-void listCards(struct cityCard card[], int arraysize);
-void pauseEnter();
-void loadData(struct cityCard cityCards[], int *numberOfCards);
-
-//main
-int main(int argc, char const *argv[]) {
-    struct cityCard cityCards[MAX_CARDS]; // Array de cartas
-    int numberOfCards = 0;
-    int option = 0;
-
-    loadData(cityCards, &numberOfCards); //Load cards from a file
-
-    do
-    {
-        
-        option = mainMenu();
-    
-        switch (option) {
-        case 1:
-            printf("New Game%d\n", option);
-            break;
-        case 2:
-            printf("Rules%d\n", option);
-            break;
-        case 3:
-            printf("New card%d\n", option);
-            createNewCard(cityCards, &numberOfCards);
-            pauseEnter();
-            break;
-        
-        case 4:
-            printf("Listar cartas%d\n", option);
-            listCards(cityCards, numberOfCards);
-            pauseEnter();
-            break;
-        default:
-            break;
-        }
-    } while (option != 0);
-    
-    
-    return 0;
-}
+#include "managerCards.h"
 
 int mainMenu() {
     cleanScreen();
@@ -106,9 +33,6 @@ void cleanScreen() {
     fflush(stdout); // Flush the output buffer to ensure the screen is cleared immediately
 }
 
-//This function create a new card
-//TODO: exibir mensagem de inserção success
-//TODO: super power está exibindo os valores de área
 void createNewCard(struct cityCard card[], int *numberOfCards){
     //int cardNumber = numberOfCards;
     if(*numberOfCards < MAX_CARDS) {
@@ -143,11 +67,13 @@ void createNewCard(struct cityCard card[], int *numberOfCards){
         card[*numberOfCards].populationDensity = card[*numberOfCards].population / card[*numberOfCards].area;
         //Generate superPower 
         card[*numberOfCards].superPower = (long double) card[*numberOfCards].population + card[*numberOfCards].area + card[*numberOfCards].pib + card[*numberOfCards].touristAttractions + card[*numberOfCards].pibPerCapita + (1/card[*numberOfCards].populationDensity);
+        
         (*numberOfCards)++; // <= Increment
         
         //Save card on file
+        // TODO: CRIAR UMA FUN;CAO SEPARADA SO PARA ESCREVER NO ARQUIVO
         FILE *database;
-        database = fopen("data.bin", "ab");
+        database = fopen("data/data.bin", "ab");
         fwrite(&card[*numberOfCards - 1], sizeof(struct cityCard), 1, database);
         fclose(database);
         
@@ -164,7 +90,7 @@ void listCards(struct cityCard card[], int arraysize) {//TODO: Verificar especif
     
     for(int i = 0; i < arraysize; i++) {
         printf("========= Carta Nº %d =========\n",card[i].cardNumber);
-        printf("Número da carta: %d\nEstado(UF):%s\nCidade: %s\nCódigo da Carta: %s\nPopulação: %ld\nÁrea: %.2f\nPIB: %.2f\nPIB per Capta: %.2f\nDensidade Populacional: %.2f\nNúmero de Pontos Turísticos: %d\nSuper Poder: %.2f\n",card[i].cardNumber,card[i].state, card[i].cityName, card[i].cardCod, card[i].population, card[i].area, card[i].pib, card[i].pibPerCapita, card[i].populationDensity, card[i].touristAttractions, card[i].superPower);
+        printf("Número da carta: %d\nEstado(UF):%s\nCidade: %s\nCódigo da Carta: %s\nPopulação: %lu\nÁrea: %.2f\nPIB: %.2f\nPIB per Capta: %.2f\nDensidade Populacional: %.2f\nNúmero de Pontos Turísticos: %d\nSuper Poder: %.2Lf\n",card[i].cardNumber,card[i].state, card[i].cityName, card[i].cardCod, card[i].population, card[i].area, card[i].pib, card[i].pibPerCapita, card[i].populationDensity, card[i].touristAttractions, card[i].superPower);
     }
     printf("======================\n");
 }
@@ -182,11 +108,12 @@ void pauseEnter() {
 
 //Load cards from a file...
 void loadData(struct cityCard cityCards[], int *numberOfCards){
-    FILE *database = fopen("data.bin", "rb");
+    FILE *database = fopen("data/data.bin", "rb");
 
     if (database == NULL) {
         *numberOfCards = 0;
         printf("The database is empty.\nStarting empty\n");
+        return;
     }
 
     //=====
