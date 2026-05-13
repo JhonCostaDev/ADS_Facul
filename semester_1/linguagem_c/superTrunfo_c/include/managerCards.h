@@ -28,6 +28,7 @@ void createNewCard(struct cityCard card[], int *numberOfCards);
 void listCards(struct cityCard card[], int arraysize);
 void pauseEnter();
 void loadData(struct cityCard cityCards[], int *numberOfCards);
+void generateDeckIndex(int userIndex[], int computerIndex[], int quantDeck, int TotalCards);
 
 
 #endif 
