@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>// para o src e include/
+#include <time.h>
 #include "managerCards.h"
+
 
 int mainMenu() {
     cleanScreen();
@@ -134,4 +137,37 @@ void loadData(struct cityCard cityCards[], int *numberOfCards){
 
     fclose(database);
     printf("System ready!\nThere are %d registers on database\n", *numberOfCards);
+}
+
+void generateDeckIndex(int arr1[], int arr2[], int quantDeck, int totalCards) {
+    srand(time(NULL));
+    int limit = totalCards;
+    
+    //preenche o array
+    int cardsIndex[totalCards];
+    for(int i = 0; i < totalCards; i++) {
+        cardsIndex[i] = i;
+    }
+    //gerar dois arrays com a quantidade de cartas escolhidas no level
+    for(int i = 0; i < quantDeck; i++) {
+        int index = rand() % limit;
+        arr1[i] = cardsIndex[index];
+
+        int temp = cardsIndex[index];
+        cardsIndex[index] = cardsIndex[limit - 1];
+        cardsIndex[limit - 1] = temp;
+
+        limit --;
+    }
+
+    for(int i = 0; i < quantDeck; i++) {
+        int index = rand() % limit;
+        arr2[i] = cardsIndex[index];
+
+        int temp = cardsIndex[index];
+        cardsIndex[index] = cardsIndex[limit - 1];
+        cardsIndex[limit - 1] = temp;
+
+        limit --;
+    }
 }
