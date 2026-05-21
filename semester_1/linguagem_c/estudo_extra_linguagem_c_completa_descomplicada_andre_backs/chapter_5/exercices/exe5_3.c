@@ -4,6 +4,16 @@ ros números naturais ímpares.
  */
 int main(int argc, char const *argv[])
 {
-    
+     int number, count;
+
+    printf("Digite um número: \n");
+    scanf("%d", &number);
+    count = 0;
+    while(count < number * 2) {
+        if(count % 2 != 0) {
+            printf("%d\n", count);
+        }
+        count++;
+    }
     return 0;
 }
