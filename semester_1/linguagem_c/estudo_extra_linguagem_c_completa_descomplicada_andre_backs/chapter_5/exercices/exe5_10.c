@@ -5,14 +5,22 @@ prima sua média.
  */
 int main(int argc, char const *argv[])
 {
-  int value = 0, int sum = 0;
+  int value = 0, sum = 0, i = 0; 
+  float mean = 0;
 
-  for(int i = 0; i < 10; i++) {
-     printf("Digite o %dº número: \n");
-        scanf("%d", &value);
-        if (value >= 0) {
-             sum += value;
-        }
+  while(i < 10) {
+    printf("Digite o %dº número: \n", i + 1);
+    scanf("%d", &value);
+
+    if (value < 0) {
+        continue;
+    }
+    sum += value;
+    i++;
   }
+  mean = sum / 10;
+
+  printf("A média dos números digitados é: %d\n", mean);
+
     return 0;
 }
