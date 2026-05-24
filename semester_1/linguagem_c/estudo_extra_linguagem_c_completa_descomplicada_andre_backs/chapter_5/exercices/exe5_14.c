@@ -7,14 +7,23 @@ no termo de ordem zero, e, a partir do segundo termo, seu valor é dado pela som
 dos dois termos anteriores. Alguns termos dessa sequência são: 0, 1, 1, 2, 3, 5, 8,
 13, 21, 34.
  */
-int main(int argc, char const *argv[]) {
+int main(void) {
   int value, first = 0, second = 1, next;
     printf("Digite a quantidade de termos da sequência Fibonacci você quer ver: \n");
-    scanf("%d\n", &value);
+    scanf("%d", &value);
 
-    for(int i = 0; i <= value; i++) {
-      next = first + second;
-      printf("%d, ", first);
+    for(int i = 0; i < value; i++) {
+      if (i == 0) {
+        printf("%d, ", first);
+      } else if(i == 1) {
+        printf("%d, ", second);
+      } else {
+        next = first + second;
+        printf("%d, ", next);
+        first = second;
+        second = next;
+      }
+      
     }
     return 0;
 }
