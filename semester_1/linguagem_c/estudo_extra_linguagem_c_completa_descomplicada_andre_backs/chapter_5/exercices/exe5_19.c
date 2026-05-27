@@ -14,7 +14,6 @@ int main(void) {
     int denominador[55]={0};
     
     for(int i = 0; i < 55; i++) {
-        
         denominador[i] = i + 1;
     }
 
@@ -22,7 +21,6 @@ int main(void) {
     int idx = 0;
     while (count < 110) {
         if(count % 2 != 0){
-            //printf("Impar: %d, \n", i);
             numerador[idx] = count;
             idx++;
         }
@@ -31,27 +29,10 @@ int main(void) {
 
         count++;
     }
-    
-
-    printf("Naturais\n");
-    for(int i = 0; i < 55; i++) {
-        printf("%d, ", denominador[i]);
-    }
-
-    printf("\nÍmpares\n");
-    for(int i = 0; i < 55; i++) {
-        printf("%d, ", numerador[i]);
-    }
-
-    printf("\nLenght impares: %d\n", sizeof(numerador) / sizeof(numerador[0]));
-    printf("\nLenght Naturais: %d\n", sizeof(denominador) / sizeof(denominador[0]));
 
     for (int i = 0 ; i <sizeof(denominador) / sizeof(denominador[0]); i++) {
-        sumN += (float) numerador[i] / (float)denominador[i];
-        printf("%d: %.2f\n", i, (float) numerador[i] / (float)denominador[i]);
-        printf("%d: %d\n", i, numerador[i]);
-        
+        sumN += (float) numerador[i] / (float)denominador[i]; 
     }
 
-    printf("\nSum: %f\n", sumN);
+    printf("A soma dos 55 primeiros termos (Números Ímpares divididos pelos Naturais) é: %.4f\n", sumN);
 }
